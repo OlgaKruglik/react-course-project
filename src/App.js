@@ -4,14 +4,13 @@ import Registration from './Pages/Registration';
 import Home from './Pages/Home'
 
 
-// Создаем маршруты
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
   { path: "/registration", element: <Registration /> },
 ], {
   future: {
-    v7_startTransition: true, // Включает использование React.startTransition
-    v7_relativeSplatPath: true, // Обновляет относительный путь сплат-роутов
+    v7_startTransition: true, 
+    v7_relativeSplatPath: true, 
   },
 });
 
