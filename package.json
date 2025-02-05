@@ -2,8 +2,10 @@
   "name": "react-course-project",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://github.com/OlgaKruglik/react-course-project.git",
+  "homepage": "https://olgakruglik.github.io/react-course-project",
   "dependencies": {
+    "@mui/icons-material": "^6.4.3",
+    "@mui/styles": "^6.4.3",
     "cra-template": "1.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
