@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/OlgaKruglik/react-course-project.git/static/css/main.dc4d6ff2.css",
-    "main.js": "/OlgaKruglik/react-course-project.git/static/js/main.aa2c7b06.js",
+    "main.js": "/OlgaKruglik/react-course-project.git/static/js/main.ce75d5ea.js",
     "index.html": "/OlgaKruglik/react-course-project.git/index.html",
     "main.dc4d6ff2.css.map": "/OlgaKruglik/react-course-project.git/static/css/main.dc4d6ff2.css.map",
-    "main.aa2c7b06.js.map": "/OlgaKruglik/react-course-project.git/static/js/main.aa2c7b06.js.map"
+    "main.ce75d5ea.js.map": "/OlgaKruglik/react-course-project.git/static/js/main.ce75d5ea.js.map"
   },
   "entrypoints": [
     "static/css/main.dc4d6ff2.css",
-    "static/js/main.aa2c7b06.js"
+    "static/js/main.ce75d5ea.js"
   ]
 }
