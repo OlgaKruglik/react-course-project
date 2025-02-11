@@ -1,0 +1,109 @@
+/* home */
+.newForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.headerForm {
+    display: flex;
+    flex-direction: column;
+    width: 70ch;
+    text-align: end;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0.1, 0.1, 0.1, 0.3);
+    gap: 10px;
+}
+.formMain {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0.1, 0.1, 0.1, 0.3);
+}
+.formAdd {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end; 
+    gap: 1rem;
+    margin-bottom: 30px;
+}
+.formlist {
+    text-align: end;
+}
+.formButton {
+    display: flex;
+    justify-content: space-between;
+}
+.icon {
+    border-radius: 10px;
+    box-shadow: 5px 5px 6px 3px rgba(0.1, 0.1, 0.1, 0.3);
+}
+.saveForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+}
+.formStrings {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.newAsk {
+    display: flex;
+    justify-content: end;
+}
+.main {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+}
+.main-center {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    justify-content: space-between;
+}
+.multiText {
+    display: flex;
+    border-radius: 5px;
+    border: 1px solid rgb(91 159 232)
+}
+.cheked {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: start;
+}
+.chekedInput {
+    display: flex;
+    gap: 5px;
+}
+.titleForm {
+    display: flex;
+    flex-direction: column;
+    gap: 60px
+}
+@media (max-width: 655px) {
+    .headerForm {
+      width: 45ch;
+    }
+    .main {
+        flex-direction: column;
+    }
+  }
+  @media (max-width: 465px) {
+    .headerForm {
+      width: 38ch;
+    }
+    .formAdd {
+        gap: 2rem;
+        flex-direction: column;
+    }
+  }
+

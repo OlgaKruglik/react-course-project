@@ -1,18 +1,18 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { ThemeProvider, createTheme } from "@mui/material/styles"; // Добавлено
-import CssBaseline from "@mui/material/CssBaseline"; // Улучшает стилизацию
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 import Registration from "./Pages/Registration";
 import Home from "./Pages/Home";
-import Login from "./Pages/Login"
+import Login from "./Pages/Login";
 
-const theme = createTheme(); // Создание темы
+const theme = createTheme();
 
 function App() {
   return (
-    <ThemeProvider theme={theme}> {/* Оборачиваем в ThemeProvider */}
-      <CssBaseline /> {/* Для стилистической консистентности */}
-      <Router basename="/react-course-project">
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/registration" element={<Registration />} />
