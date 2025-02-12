@@ -5,6 +5,7 @@ import NewForm from "../Components/NewForm";
 import SaveForm from "../Components/SaveForm";
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
+import useFetchUsers from '../Hook/useUser'
 import CloseIcon from "@mui/icons-material/Close";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import { styled } from "@mui/material/styles";
@@ -28,6 +29,7 @@ function Home() {
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
   const [savedForm, setSavedForm] = useState(null);
+  const { user, loadings, error: fetchError, refetchUsers } = useFetchUsers();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -55,13 +57,13 @@ function Home() {
     fetchUsers();
   }, []);
 
+
 //   const handleSaveForm = (formData) => {
 //     setSavedForm(formData);
 //     console.log(formData);
 //   };
-
   const handleOpen = () => {
-    setOpen(true);
+      setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
@@ -70,7 +72,7 @@ function Home() {
   return (
     <div>
       <ButtonWrapper>
-        <Button variant="outlined" color="primary" endIcon={<ControlPointIcon />} onClick={handleOpen}>
+        <Button variant="outlined" disabled={!!fetchError || loadings}  color="primary" endIcon={<ControlPointIcon />} onClick={handleOpen}>
           Create a form
         </Button>
 

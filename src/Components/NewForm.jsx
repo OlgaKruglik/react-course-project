@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import MultiText from "./MultiText";
 import FormString from "./FormString";
 import Cheked from "./Cheked";
+import axios from "axios";
 import FormNumber from "./ForrmNumber";
 import { Button, Grid, TextField, FormControl, InputLabel, Select, MenuItem, SelectChangeEvent } from "@mui/material";
 import AddCommentIcon from "@mui/icons-material/AddComment";
 import DeleteIcon from '@mui/icons-material/Delete';
+import useFetchUsers from '../Hook/useUser'
+import { API_BASE_URL } from "../config";
 import PlusOneIcon from "@mui/icons-material/PlusOne";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
@@ -28,6 +31,7 @@ function NewForm() {
     value: "",
   });
   const [discription, setDiscription] = useState("");
+  const { users, loading, error: fetchError, refetchUsers } = useFetchUsers();
 
   const addNewQuestion = () => {
     setQuestions((prevQuestions) => [...prevQuestions, initQuestion()]);
@@ -39,7 +43,7 @@ function NewForm() {
     checked: Cheked,
     formNumber: FormNumber,
   };
-
+  console.log(users);
   const removeComponent = (id) => {
     setQuestions((prevQuestions) => prevQuestions.filter((item) => item.id !== id));
   }
@@ -50,6 +54,23 @@ function NewForm() {
     setQuestions((prevQuestions) =>
       prevQuestions.map((question) => (question.id === id ? { ...question, ...newAttributes } : question))
     );
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const formData = { title, description: discription, questions };
+      const response = await axios.post(`${API_BASE_URL}/forms`, formData, { withCredentials: true });
+
+      if (response.status === 201) {
+        alert("Форма успешно создана!");
+        setTitle("");
+        setDiscription("");
+        setQuestions([initQuestion()]);
+      }
+    } catch (error) {
+      console.error("Ошибка создания формы:", error);
+      alert("Ошибка создания формы");
+    }
   };
 
   return (
@@ -82,6 +103,9 @@ function NewForm() {
               onChange={(e) => setDiscription(e.target.value)}
             />
           </div>
+          <Button variant="contained" color="primary" onClick={handleSubmit}>
+            Отправить форму
+          </Button>
           {questions.map((question) => {
             const TypeComponent = typeComponent[question.type];
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import useFetchUsers from '../Hook/useUser';
 import {CssBaseline, TextField, FormControlLabel, Button, Avatar, Checkbox, Grid, Typography, Container, Alert} from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import HomeIcon from "@mui/icons-material/Home";
@@ -45,6 +46,8 @@ function Registration() {
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
+    const {users, loading, findUserByEmail} = useFetchUsers();
+
 
     useEffect(() => {
         if (message) {
@@ -68,7 +71,7 @@ function Registration() {
                 setEmail('');
                 setPassword('');
                 if (response.status === 201) { 
-                    outRezult('Registration successful!');  
+                    outRezult('Registration successful!'); 
                     setTimeout(() => navigate('/'), 2000);
                     } else {
                         console.log('Unexpected response status:', response.status);

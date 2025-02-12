@@ -21,7 +21,8 @@ const useFetchUsers = () => {
                     password: user.password,
                     created_at: user.created_at,
                     is_lockedis_locked: user.is_locked || null,
-                    is_deleted: user.is_deleted
+                    is_deleted: user.is_deleted,
+                    forms: user.forms
                 }));
                 setUsers(filteredUsers);
             } else {
@@ -39,7 +40,11 @@ const useFetchUsers = () => {
         fetchUsers();
     }, [fetchUsers]);
 
-    return { users, loading, error, refetchUsers: fetchUsers };
+    const findUserByEmail = (email) => {
+        return users.find(user => user.email === email);
+    };
+
+    return { users, loading, error, refetchUsers: fetchUsers, findUserByEmail };
 };
 
 export default useFetchUsers;

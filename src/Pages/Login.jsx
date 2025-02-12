@@ -45,7 +45,7 @@ function Login() {
     const [rememberMe, setRememberMe] = useState(false);
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
-    const {users, loading, fetchError} = useFetchUsers();
+    const {users, loading, findUserByEmail} = useFetchUsers();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -71,10 +71,7 @@ function Login() {
               { email, password },
               { withCredentials: true } 
             );
-      
-            console.log('Response from server:', response.data);
-            console.log('Fetched Users:', users);
-      
+              console.log(users);
             if (response.status === 200) { 
                 outRezult('Registration successful!');  
                 setTimeout(() => navigate('/'), 2000);
