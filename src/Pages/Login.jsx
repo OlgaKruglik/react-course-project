@@ -42,10 +42,8 @@ function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
-    const [rememberMe, setRememberMe] = useState(false);
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
-    const {users, loading, findUserByEmail} = useFetchUsers();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -60,30 +58,32 @@ function Login() {
         console.log("Message set:", str);
       };
 
-    const handleSubmit = async (event) => {
+      const handleSubmit = async (event) => {
         event.preventDefault();
         
         if (email && password) {
           try {
-            console.log('Sending check-user request...');
-            const response = await axios.post(
-              `${API_BASE_URL}/check-user`, 
+            const response = await axios.post(`${API_BASE_URL}/check-user`, 
               { email, password },
-              { withCredentials: true } 
+              { withCredentials: true }
             );
-              console.log(users);
+      
             if (response.status === 200) { 
-                outRezult('Registration successful!');  
-                setTimeout(() => navigate('/'), 2000);
-                } else {
-                    console.log('Unexpected response status:', response.status);
-                } 
+              console.log('User exists and password is valid.');
+              console.log(response.data.userId)
+              localStorage.setItem("currentUserId", response.data.userId);
+      
+              outRezult('Login successful!');  
+              setTimeout(() => navigate('/'), 2000);
+            } else {
+              console.log('Unexpected response status:', response.status);
+            }
           } catch (error) {
             console.error('Error checking user:', error);
             setError(error.response?.data || 'An error occurred during check-user.');
           }
         } else {
-          alert('Please fill in both email and password fields.');
+          outRezult('Please fill in both email and password fields.');
         }
       };
 

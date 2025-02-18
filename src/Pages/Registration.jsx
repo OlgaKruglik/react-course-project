@@ -61,29 +61,39 @@ function Registration() {
         console.log("Message set:", str);
       };
 
-    const handleRegister = async (event) => {
+      const handleRegister = async (event) => {
         event.preventDefault();
         if (email && password && name) {
-            try {
-                const response = await axios.post(`${API_BASE_URL}/register`, { username: name, email, password }, { withCredentials: true });
-                console.log('User registered:', response.data.message);
-                setName('');
-                setEmail('');
-                setPassword('');
-                if (response.status === 201) { 
-                    outRezult('Registration successful!'); 
-                    setTimeout(() => navigate('/'), 2000);
-                    } else {
-                        console.log('Unexpected response status:', response.status);
-                    }
-            } catch (error) {
-                console.error('Error registering user:', error);
-                setError(error.response?.data || 'An error occurred during registration.');
+          try {
+            const response = await axios.post(`${API_BASE_URL}/register`, { 
+              username: name, 
+              email, 
+              password 
+            }, { withCredentials: true });
+      
+            if (response.status === 201) {
+              console.log('User registered:', response.data.message);
+              setName('');
+              setEmail('');
+              setPassword('');
+              
+              // Сохраняем userId
+              console.log(response.data.userId);
+              localStorage.setItem("currentUserId", response.data.userId);
+              
+              outRezult('Registration successful!');
+              setTimeout(() => navigate('/'), 2000);
+            } else {
+              console.log('Unexpected response status:', response.status);
             }
+          } catch (error) {
+            console.error('Error registering user:', error);
+            setError(error.response?.data || 'An error occurred during registration.');
+          }
         } else {
-            outRezult('Please fill in all fields (name, email, and password).');
+          outRezult('Please fill in all fields (name, email, and password).');
         }
-    };
+      };
 
 
 
