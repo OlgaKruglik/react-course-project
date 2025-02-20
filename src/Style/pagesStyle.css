@@ -110,7 +110,7 @@
     padding: 5ch;
     flex-wrap: wrap;
     gap: 3ch;
-    /* width: 100%; */
+    width: 100%;
 }
 .storeForm {
     padding: 5ch;
