@@ -55,7 +55,6 @@ function Login() {
       
       const outRezult = (str) => {
         setMessage(str); 
-        console.log("Message set:", str);
       };
 
       const handleSubmit = async (event) => {
@@ -98,20 +97,20 @@ function Login() {
             </ButtonWrapper>
             <Container component="main" maxWidth="xs">
             {message && (
-                    <Alert
-                        severity="success"
-                        sx={{
-                            position: "fixed",
-                            top: 20,
-                            left: "50%",
-                            transform: "translateX(-50%)",
-                            width: "80%",
-                            zIndex: 10,
-                        }}
-                        >
-                        {message}
-                        </Alert>
-                )}
+              <Alert
+                severity="success"
+                sx={{
+                  position: "fixed",
+                  top: 20,
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  width: "80%",
+                  zIndex: 10,
+                }}
+                >
+                {message}
+              </Alert>
+            )}
             <CssBaseline />
             <Paper>
                 <AvatarStyled>

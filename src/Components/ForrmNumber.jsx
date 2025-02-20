@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import {TextField} from "@mui/material";
 
-function ForrmNumber() {
-    const [title, setTitle] = useState ("")
+function ForrmNumber({ value, onChange }) {
     return (
         <div> 
             <TextField
@@ -14,7 +13,8 @@ function ForrmNumber() {
                         shrink: true,
                     },
                 }}
-                onChange={(e) => setTitle(e.target.value)}
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
                 sx="width: 100%"
             />
         </div>

@@ -2,24 +2,20 @@ import React, { useState } from 'react';
 import {Grid, TextField, IconButton} from "@mui/material";
 
 
-function FormString() {
-    const [answer, setAnswer] = useState("");
+function FormString({ value, onChange }) {
+
     
 
     
     return (
         <div>
             <TextField
-                    variant="standard"
-                    required
-                    fullWidth
-                    id="answer"
-                    label="answer"
-                    name="answer"
-                    autoComplete="off"
-                    value={answer} 
-                    onChange={(e) => setAnswer(e.target.value)}
-                />
+                variant="standard"
+                fullWidth
+                label="answer"
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+            />
             
         </div>
     )

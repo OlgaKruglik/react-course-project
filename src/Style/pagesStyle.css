@@ -27,12 +27,15 @@
 .formAdd {
     display: flex;
     flex-direction: row;
-    align-items: flex-end; 
+    align-items: center;
+    justify-content: center;
+    padding: 4ch;
     gap: 1rem;
     margin-bottom: 30px;
 }
 .formlist {
     text-align: end;
+    cursor: pointer;
 }
 .formButton {
     display: flex;
@@ -74,7 +77,6 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-bottom: 20ch;
 }
 .multiText {
     display: flex;
@@ -94,11 +96,18 @@
 .titleForm {
     display: flex;
     flex-direction: column;
-    gap: 60px;
-    align-items: center;
+    gap: 4ch;
+    cursor: pointer;
+    /* align-items: center; */
 }
 .storeFormHeader {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.storeFormMain {
+    display: flex;
+    justify-content: center;
     padding: 5ch;
     flex-wrap: wrap;
     gap: 3ch;
@@ -112,6 +121,11 @@
     gap: 4rem;
     width: 100%;
 }
+.closeForm {
+    display: flex;
+    justify-content: end;
+    width: 50%;
+}
 .saveTitle {
     display: flex;
     flex-direction: column;
@@ -121,6 +135,8 @@
     cursor: pointer;
     padding: 3ch;
     box-shadow: 5px 5px 6px 3px rgba(0.1, 0.1, 0.1, 0.3);
+    hyphens: auto;
+    word-wrap: break-word;
 }
 
 .saveTitle:hover {
@@ -135,12 +151,55 @@
     flex-direction: column;
     gap: 2ch;
 }
+.myForm {
+    display: flex;
+    flex-direction: column;
+    padding: 3ch;
+}
+.myFormAnswer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.answerHeader {
+    display: flex;
+    justify-content: space-between;
+    padding: 3ch;
+    width: 100%;
+}
+.answerUsers {
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.answerUsers ul {
+    display: flex;
+    flex-direction: column;
+    gap: 2ch;
+}
 @media (max-width: 655px) {
     .headerForm {
       width: 45ch;
     }
+    .answerHeader {
+        display: flex;
+        flex-direction: column;
+        gap: 1ch;
+    }
     .main {
         flex-direction: column;
+    }
+    .storeFormHeader {
+        padding: 2ch;
+        justify-content: space-evenly;
+    }
+    .saveTitle {
+        padding: 1ch;
+        width: 40%;
+    }
+    .closeForm {
+        width: 90%;
     }
   }
   @media (max-width: 465px) {
@@ -150,6 +209,15 @@
     .formAdd {
         gap: 2rem;
         flex-direction: column;
+    }
+    .storeFormHeader {
+        padding: 1ch;
+    }
+    .saveTitle {
+        width: 45%;
+    }
+    .closeForm {
+        width: 100%;
     }
   }
 

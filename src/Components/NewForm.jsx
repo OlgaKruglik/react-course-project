@@ -4,25 +4,31 @@ import FormString from "./FormString";
 import Cheked from "./Cheked";
 import axios from "axios";
 import FormNumber from "./ForrmNumber";
-import { Button, Grid, TextField, FormControl, InputLabel, Select, MenuItem, SelectChangeEvent } from "@mui/material";
+import { Button, Grid, TextField, FormControl, InputLabel, Select, MenuItem, CircularProgress } from "@mui/material";
 import AddCommentIcon from "@mui/icons-material/AddComment";
 import DeleteIcon from '@mui/icons-material/Delete';
 import useFetchForm from '../Hook/useForm'
 import { API_BASE_URL } from "../config";
-import { Link, useNavigate } from "react-router-dom";
+import CloseIcon from "@mui/icons-material/Close";
+import OutboxIcon from '@mui/icons-material/Outbox';
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import SaveAltIcon from "@mui/icons-material/SaveAlt";
+
 
 
 import "../Style/pagesStyle.css";
 
-function NewForm({ formId }) {
-  const initQuestion = () => ({ type: "formString", id: Date.now() });
+function NewForm() {
+  const initQuestion = () => ({ type: "formString", id: Date.now(), options: [{ id: 1, checked: false, answer: "" }] });
   const [title, setTitle] = useState("");
   const [questions, setQuestions] = useState([initQuestion()]);
   const [discription, setDiscription] = useState("");
   const [message, setMessage] = useState('');
   const { forms, loadingTitle, errorTitle, getFormById } = useFetchForm();
   const navigate = useNavigate();
+  const { formId } = useParams();
+  const myForrm = localStorage.getItem('isMyFormPageOpen');
 
   useEffect(() => {
     if (message) {
@@ -31,24 +37,37 @@ function NewForm({ formId }) {
     }
   }, [message]);
 
-  useEffect(() => {
-    if (formId !== 0) {
-      console.log("Selected Form ID:", formId);
-      const form = getFormById(formId);
-      console.log("Selected Form:", form);
-      setTitle(form?.title || "");
-      setDiscription(form?.descriptions || "");
-      setQuestions(form?.questions || [initQuestion()]);
-  }
-}, [formId, getFormById]);
 
+  useEffect(() => {
+    if (forms.length > 0 && formId) {
+      const form = getFormById(formId);
+      if (form) {
+        setTitle(form.title || "");
+        setDiscription(form.descriptions || "");
+        setQuestions(form.questions || [initQuestion()]);
+      } else {
+        console.error("Form not found for ID:", formId);
+      }
+    }
+  }, [formId, forms]);
+
+  if (loadingTitle) return <div style={{marginTop: '10ch',
+      textAlign: 'center'}}> <CircularProgress color="success"/> 
+      </div>;
 
   const outRezult = (str) => {
     setMessage(str); 
     console.log("Message set:", str);
   };
 
-
+  const handleClose = () => {
+    if (myForrm == 1) {
+      navigate('/myforms');
+      localStorage.removeItem("isMyFormPageOpen");
+    } else {
+      navigate('/');
+    }
+  };
 
   const addNewQuestion = () => {
     setQuestions((prevQuestions) => [...prevQuestions, initQuestion()]);
@@ -68,14 +87,25 @@ function NewForm({ formId }) {
 
   const updateQuestion = (id, newAttributes) => {
     setQuestions((prevQuestions) =>
-      prevQuestions.map((question) => (question.id === id ? { ...question, ...newAttributes } : question))
+      prevQuestions.map((question) =>
+        question.id === id
+          ? {
+              ...question,
+              ...newAttributes,
+              options:
+                newAttributes.type === "checked" && !question.options
+                  ? [{ id: 1, checked: false, answer: "" }]
+                  : question.options,
+            }
+          : question
+      )
     );
   };
 
   const handleSubmit = async () => {
     try {
       const currentUserId = localStorage.getItem("currentUserId");
-      
+      navigate('/myforms')
       if (!currentUserId) {
         outRezult("The user is not logged in.");
         return;
@@ -97,13 +127,64 @@ function NewForm({ formId }) {
         setTitle("");
         setDiscription("");
         setQuestions([initQuestion()]);
-        setTimeout(() => navigate('/save'), 2000);
+        setTimeout(() => navigate('/myforms'), 2000);
       }
     } catch (error) {
       console.error("Form creation error:", error);
       outRezult("Form creation error");
     }
   };
+
+  const handleSubmitAnswer = async () => {
+    try {
+      const currentUserId = localStorage.getItem("currentUserId");
+      
+      if (!currentUserId) {
+        outRezult("The user is not logged in.");
+        return;
+      }
+  
+      const answers = questions.map(question => {
+        let answerValue = "";
+  
+        if (question.type === "formString") {
+          answerValue = question.answer;
+        } else if (question.type === "multiText") {
+          answerValue = question.answer;
+        } else if (question.type === "checked") {
+          answerValue = question.options.filter(option => option.checked).map(option => option.answer);
+        } else if (question.type === "formNumber") {
+          answerValue = question.answer;
+        }
+  
+        return {
+          questionId: question.id,
+          answer: answerValue,
+        };
+      });
+  
+      const formData = {
+        formId,
+        title,
+        description: discription,
+        answers,
+        userId: currentUserId,
+      };      
+  
+      const response = await axios.post(`${API_BASE_URL}/answers`, formData, {
+        withCredentials: true,
+      });
+  
+      if (response.status === 201) {
+        outRezult("Answers have been successfully submitted!");
+        setTimeout(() => navigate('/'), 2000);
+      }
+    } catch (error) {
+      console.error("Error submitting answers:", error);
+      outRezult(error.response?.data?.message || "Error submitting answers.");
+    }
+  };
+  
 
 
   
@@ -112,6 +193,14 @@ function NewForm({ formId }) {
     <div className="formAdd">
         <div className="titleForm">
           <div className="headerForm">
+            <div className="formlist" 
+            style={{ display: !formId ? 'none': null}}
+            >
+              <Button>
+                <CloseIcon onClick={handleClose} color="primary" 
+                />
+              </Button>
+            </div>
             <TextField
               sx={{ padding: "10px" }}
               variant="outlined"
@@ -184,13 +273,18 @@ function NewForm({ formId }) {
                   </div>
                 </div>
                 <div className="formStrings">
-                  <TypeComponent />
+                <TypeComponent
+                  value={question.answer || ""}
+                  onChange={(newValue) => updateQuestion(question.id, { answer: newValue })}
+                />
                 </div>
               </div>
             );
           })}
+          
+          
 
-          {!formId && (
+          {!formId ? (
             <Button
               onClick={handleSubmit}
               sx={{
@@ -202,12 +296,16 @@ function NewForm({ formId }) {
                   backgroundColor: '#a2cf6e',
                   color: '#618833',
                   width: '60%',
+                  alignItems: 'center'
                 },
               }}
             >
               <SaveAltIcon color="green" /> Save
             </Button>
-          )}
+          ) : 
+          <Button onClick={handleSubmitAnswer}>
+            <OutboxIcon color="primary" /> Send 
+          </Button>}
 
         </div>
         <div className="questionButton" style={{ display: formId ? 'none':null}}>

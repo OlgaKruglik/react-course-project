@@ -49,11 +49,10 @@ const useFetchForm = () => {
 
   useEffect(() => {
     fetchForm();
-    console.log('Forms after fetching:', forms);
   }, [fetchForm]);
 
   const getFormById = useCallback((formId) => {
-    return forms.find((form) => form.id === formId) || null;
+    return forms.find((form) => form.id === Number(formId)) || null;
   }, [forms]);
 
   return { forms, loadingTitle, errorTitle, getFormById };
