@@ -292,11 +292,12 @@ function NewForm() {
                 color: '#8bc34a',
                 display: 'flex',
                 gap: '10px',
+                justifyContent: 'center',
                 ':hover': {
                   backgroundColor: '#a2cf6e',
                   color: '#618833',
-                  width: '60%',
-                  alignItems: 'center'
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 },
               }}
             >

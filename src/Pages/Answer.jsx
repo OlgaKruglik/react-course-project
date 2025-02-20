@@ -70,7 +70,6 @@ function Answer() {
                 className="saveTitle"
                 onClick={() => answerForm(form.id)} 
               >
-                <p>{form.userId}</p>
                 <p>{form.user?.username}</p>
                 <h1>{form.title}</h1>
                 <p>{form.descriptions}</p>
