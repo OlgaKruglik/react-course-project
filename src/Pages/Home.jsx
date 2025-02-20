@@ -48,8 +48,6 @@ function Home() {
           withCredentials: true, 
         });
 
-        console.log("API Response:", response.data);
-
         if (response.headers["content-type"]?.includes("application/json")) {
           setUsers(response.data);
         } else {

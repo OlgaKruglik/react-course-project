@@ -98,7 +98,6 @@
     flex-direction: column;
     gap: 4ch;
     cursor: pointer;
-    /* align-items: center; */
 }
 .storeFormHeader {
     display: flex;
@@ -111,6 +110,7 @@
     padding: 5ch;
     flex-wrap: wrap;
     gap: 3ch;
+    /* width: 100%; */
 }
 .storeForm {
     padding: 5ch;

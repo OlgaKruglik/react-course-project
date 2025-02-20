@@ -68,8 +68,6 @@ function Login() {
             );
       
             if (response.status === 200) { 
-              console.log('User exists and password is valid.');
-              console.log(response.data.userId)
               localStorage.setItem("currentUserId", response.data.userId);
       
               outRezult('Login successful!');  

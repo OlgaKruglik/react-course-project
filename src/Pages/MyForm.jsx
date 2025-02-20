@@ -22,7 +22,6 @@ function MyForm() {
 
   useEffect(() => {
     localStorage.setItem("isMyFormPageOpen", "1");
-    console.log("isMyFormPageOpen set to 1");
   }, []);
 
   if (loadingTitle) return <CircularProgress color="primary" />;

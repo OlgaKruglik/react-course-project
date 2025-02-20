@@ -19,13 +19,11 @@ function Answer() {
 
   const answerForm = async (formId) => {
     setOpen(true);
-    console.log(formId);
     setLoadingAnswers(true);
     try {
       const answersResponse = await axios.get(
         `${API_BASE_URL}/answers?formId=${formId}`
       );
-      console.log(answersResponse.data);
       setSelectedAnswers(answersResponse.data); 
     } catch (error) {
       console.error("Ошибка загрузки ответов:", error);
@@ -48,7 +46,6 @@ function Answer() {
 
   if (errorTitle) return <Alert severity="error">Ошибка: {errorTitle}</Alert>;
 
-  console.log("Выбранные ответы:", selectedAnswers);
   return (
     <div className="myFormAnswer">
       <div className="answerHeader">
