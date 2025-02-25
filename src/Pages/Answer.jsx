@@ -16,7 +16,6 @@ function Answer() {
   const currentUserId = localStorage.getItem("currentUserId");
   const navigate = useNavigate();
 
-
   const answerForm = async (formId) => {
     setOpen(true);
     setLoadingAnswers(true);
@@ -49,10 +48,18 @@ function Answer() {
   return (
     <div className="myFormAnswer">
       <div className="answerHeader">
-        <Button variant="outlined" onClick={() => setOpen(false)} sx={{ width: "30%",   display: !open ? 'none': null }}>
+        <Button variant="outlined" onClick={() => setOpen(false)} 
+          sx={{ width: "30%",   display: !open ? 'none': null,
+          "@media (max-width: 465px)": {
+            width: "100%",
+          }, }}>
           Back to the list of forms
         </Button>
-        <Button variant="outlined" startIcon={<HomeIcon />} sx={{ width: "20%" }}>
+        <Button variant="outlined" startIcon={<HomeIcon />} 
+          sx={{ width: "20%",
+          "@media (max-width: 465px)": {
+            width: "100%",
+          } }}>
           <Links component={Link} to="/" variant="body2">
             Home
           </Links>
@@ -88,7 +95,8 @@ function Answer() {
                 <li key={answer.id}>
                   <strong>Username: {answer.user?.username || "Unknown"}</strong>
                   <br />
-                  <strong>{answer.question?.title}:</strong> {answer.answer}
+                  <strong>{answer.question?.title}:</strong> {answer.question?.type === "checked" 
+                  ? (answer.answer === "true" ? "Yes" : "No") : answer.answer}
                 </li>
               ))}
             </ul>

@@ -18,6 +18,10 @@ const ButtonWrapper = styled("div")(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   margin: theme.spacing(3),
+  gap: "1ch",
+  "@media (max-width: 465px)": {
+    flexDirection: "column",
+  },
 }));
 
 const FormStyled = styled("form")(({ theme }) => ({
@@ -99,7 +103,6 @@ function Home() {
   return (
     <div>
       <ButtonWrapper>
-
         <Button variant="outlined" disabled={!isRegisteredUser}  color="primary" endIcon={<ListIcon />} onClick={openMyForms}>
           My forms
         </Button>

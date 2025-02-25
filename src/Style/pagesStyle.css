@@ -182,11 +182,6 @@
     .headerForm {
       width: 45ch;
     }
-    .answerHeader {
-        display: flex;
-        flex-direction: column;
-        gap: 1ch;
-    }
     .main {
         flex-direction: column;
     }
@@ -196,7 +191,7 @@
     }
     .saveTitle {
         padding: 1ch;
-        width: 40%;
+        width: 100%;
     }
     .closeForm {
         width: 90%;
@@ -214,10 +209,15 @@
         padding: 1ch;
     }
     .saveTitle {
-        width: 45%;
+        width: 100%;
     }
     .closeForm {
         width: 100%;
+    }
+    .answerHeader {
+        display: flex;
+        flex-direction: column;
+        gap: 1ch;
     }
   }
 

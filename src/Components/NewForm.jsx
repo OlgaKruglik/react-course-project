@@ -94,7 +94,7 @@ function NewForm() {
               ...newAttributes,
               options:
                 newAttributes.type === "checked" && !question.options
-                  ? [{ id: 1, checked: false, answer: "" }]
+                  ? [{ id: 1, checked: '', answer: "" }]
                   : question.options,
             }
           : question
@@ -144,19 +144,15 @@ function NewForm() {
         return;
       }
   
-      const answers = questions.map(question => {
+      const answers = questions.map((question) => {
         let answerValue = "";
-  
-        if (question.type === "formString") {
-          answerValue = question.answer;
-        } else if (question.type === "multiText") {
-          answerValue = question.answer;
+        if (["formString", "multiText", "formNumber"].includes(question.type)) {
+          answerValue = question.answer || "";
         } else if (question.type === "checked") {
-          answerValue = question.options.filter(option => option.checked).map(option => option.answer);
-        } else if (question.type === "formNumber") {
-          answerValue = question.answer;
+          console.log(answerValue);
+          const checkedOptions = question.answer?.filter(option => option.checked === "true");
+            answerValue = checkedOptions.length > 0 ? "true" : "false";
         }
-  
         return {
           questionId: question.id,
           answer: answerValue,
@@ -321,3 +317,6 @@ function NewForm() {
 }
 
 export default NewForm;
+
+
+
