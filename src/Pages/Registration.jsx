@@ -77,7 +77,6 @@ function Registration() {
               setEmail('');
               setPassword('');
               
-              // Сохраняем userId
               console.log(response.data.userId);
               localStorage.setItem("currentUserId", response.data.userId);
               
