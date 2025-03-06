@@ -46,7 +46,6 @@ function Registration() {
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
-    const {users, loading, findUserByEmail} = useFetchUsers();
 
 
     useEffect(() => {
@@ -65,21 +64,19 @@ function Registration() {
         event.preventDefault();
         if (email && password && name) {
           try {
-            const response = await axios.post(`${API_BASE_URL}/register`, { 
-              username: name, 
-              email, 
-              password 
-            }, { withCredentials: true });
+            const apiToken = localStorage.getItem("apiToken");
+            const response = await axios.post(`${API_BASE_URL}/register`,{ username: name, email, password }, 
+            {
+              headers: { Authorization: `Bearer ${apiToken}` },
+              withCredentials: true
+            }
+          );
       
             if (response.status === 201) {
-              console.log('User registered:', response.data.message);
               setName('');
               setEmail('');
               setPassword('');
-              
-              console.log(response.data.userId);
-              localStorage.setItem("currentUserId", response.data.userId);
-              
+              localStorage.setItem("currentUserId", response.data.userId);              
               outRezult('Registration successful!');
               setTimeout(() => navigate('/'), 2000);
             } else {

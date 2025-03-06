@@ -10,7 +10,13 @@ const useFetchForm = () => {
   const fetchForm = useCallback(async () => {
     setLoadingTitle(true);
     try {
-      const response = await axios.get(`${API_BASE_URL}/forms`);
+      const apiToken = localStorage.getItem("apiToken");
+      const response = await axios.get(`${API_BASE_URL}/forms`,{
+        headers: {
+            Authorization: `Bearer ${apiToken}`, // Добавляем токен в заголовок
+        },
+        withCredentials: true
+    });
 
       if (response.headers['content-type'].includes('application/json') && Array.isArray(response.data)) {
         const filteredForms = response.data.map((form) => ({
@@ -20,6 +26,7 @@ const useFetchForm = () => {
             id: form.user?.id || null,
             username: form.user?.username || '',
             email: form.user?.email || '',
+            apiToken: form.user?.apiToken,
           },
           title: form.title || '',
           descriptions: form.descriptions || '',

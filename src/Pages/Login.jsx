@@ -69,7 +69,7 @@ function Login() {
       
             if (response.status === 200) { 
               localStorage.setItem("currentUserId", response.data.userId);
-      
+              localStorage.setItem("apiToken", response.data.apiToken);       
               outRezult('Login successful!');  
               setTimeout(() => navigate('/'), 2000);
             } else {

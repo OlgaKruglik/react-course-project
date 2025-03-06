@@ -10,15 +10,21 @@ const useFetchUsers = () => {
     const fetchUsers = useCallback(async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${API_BASE_URL}/users`);
-            console.log('API Response:', response.data);
+            const apiToken = localStorage.getItem("apiToken"); // Получаем токен из локального хранилища
 
+        const response = await axios.get(`${API_BASE_URL}/users`, {
+            headers: {
+                Authorization: `Bearer ${apiToken}`, // Добавляем токен в заголовок
+            },
+            withCredentials: true
+        });
             if (response.headers['content-type'].includes('application/json')) {
                 const filteredUsers = response.data.map(user => ({
                     id: user.id,
                     name: user.username,
                     email: user.email,
                     password: user.password,
+                    apiToken: user.apiToken || null,
                     created_at: user.created_at,
                     is_lockedis_locked: user.is_locked || null,
                     is_deleted: user.is_deleted,
